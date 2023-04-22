@@ -18,8 +18,7 @@ export default function Login() {
   const navigation = useNavigation();
   const base_url = "https://pamoja-backend.onrender.com/api";
   // const base_url = 'http://localhost:5000/api'
-  const { getUserProfile, isLoggedIn } = useAuth();
-  console.log(isLoggedIn, isLoggedIn);
+  const { getUserProfile } = useAuth();
   React.useEffect(()=>{},[isLoading])
   const submit = () => {
     axios

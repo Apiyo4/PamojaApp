@@ -1,6 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity} from "react-native";
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -19,12 +18,18 @@ import { useState } from "react";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-let initialState = sessionStorage.getItem("token") === null ? false: true;
+let initialState = sessionStorage.getItem("token") === null ? false : true;
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(initialState);
   React.useEffect(() => {}, [isLoggedIn, setIsLoggedIn]);
-  const auth = useAuth();
+
+  const logout = () => {
+    if (sessionStorage.hasOwnProperty("token")) {
+      sessionStorage.clear();
+      setIsLoggedIn(false)   
+    }
+  };
   const AppStack = () => {
     return (
       <Stack.Navigator>
@@ -67,7 +72,6 @@ export default function App() {
             />
           )}
           {isLoggedIn && (
-            // (<Drawer.Group>
             <Drawer.Screen
               name="Books"
               component={Books}
@@ -75,6 +79,18 @@ export default function App() {
                 title: "Books",
                 drawerIcon: () => (
                   <MaterialIcons name="library-books" size={24} color="black" />
+                ),
+                headerRight: () => (
+                  <TouchableOpacity
+                    onPress={logout}
+                    style={{ paddingRight: 12 }}
+                  >
+                    <MaterialCommunityIcons
+                      name="logout"
+                      size={24}
+                      color="black"
+                    />
+                  </TouchableOpacity>
                 ),
               }}
             />
@@ -86,6 +102,18 @@ export default function App() {
               options={{
                 title: "Bugs",
                 drawerIcon: () => <Entypo name="bug" size={24} color="black" />,
+                headerRight: () => (
+                  <TouchableOpacity
+                    onPress={logout}
+                    style={{ paddingRight: 12 }}
+                  >
+                    <MaterialCommunityIcons
+                      name="logout"
+                      size={24}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                ),
               }}
             />
           )}
@@ -102,21 +130,17 @@ export default function App() {
                     color="black"
                   />
                 ),
-              }}
-            />
-          )}
-          {isLoggedIn && (
-            <Drawer.Screen
-              name="Logout"
-              component={Login}
-              options={{
-                title: "Logout",
-                drawerIcon: () => (
-                  <MaterialCommunityIcons
-                    name="logout"
-                    size={24}
-                    color="black"
-                  />
+                headerRight: () => (
+                  <TouchableOpacity
+                    onPress={logout}
+                    style={{ paddingRight: 12 }}
+                  >
+                    <MaterialCommunityIcons
+                      name="logout"
+                      size={24}
+                      color="black"
+                    />
+                  </TouchableOpacity>
                 ),
               }}
             />

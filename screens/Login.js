@@ -30,7 +30,6 @@ export default function Login() {
         password: passwordRef.current.value,
       })
       .then((res) => {
-        // debugger
         setIsLoading(true)
         if (res.data.token) {
           // sessionStorage.setItem("token", res.data.token);

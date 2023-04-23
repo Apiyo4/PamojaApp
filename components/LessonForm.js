@@ -28,7 +28,7 @@ export default function LessonForm() {
 
   const submit = async (event) => {
     event.preventDefault();
-    debugger
+    
     await axios()
       .post(`${base_url}/lessons`, {
         topic: topicRef.current.value,

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Button } from "react-native-elements";
 import { RequireAuth, useAuth } from "../contexts/AuthContext";
+import Comments from "./Comments";
 
 const screenWidth = Dimensions.get("window").width;
 const imageWidth = screenWidth * 0.9;
@@ -67,9 +68,14 @@ const commonWords = [
   "and—their",
 ];
 export default function Book({ books }) {
+  const [isShowComments, setIsShowComments] = useState(false);
+  const base_url = `https://pamoja-backend.onrender.com/api`;
+  // const base_url = `http://localhost:5000/api`;
+  
   const { user } = useAuth();
   const renderBook = ({ item }) => {
     const edition = `Edition: ${item.edition} `;
+    const commentsUrl = `${base_url}/books/${item._id}/comments`;
     const tags = [
       ...new Set(
         item.description
@@ -104,7 +110,7 @@ export default function Book({ books }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "row",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Title:</Text>
@@ -126,7 +132,7 @@ export default function Book({ books }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "row",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Author:</Text>
@@ -137,7 +143,7 @@ export default function Book({ books }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "row",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Location:</Text>
@@ -148,7 +154,7 @@ export default function Book({ books }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "column",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Description:</Text>
@@ -159,7 +165,33 @@ export default function Book({ books }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "column",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              setIsShowComments((isShowComments) => !isShowComments)
+            }
+          >
+            <Text style={[styles.title, styles.titlePadding, styles.blueText]}>
+              {isShowComments ? "Close" : "Read comments"}
+            </Text>
+          </TouchableOpacity>
+
+          {isShowComments && (
+            <Comments
+              comments={item.comments}
+              comment={"fix"}
+              url={commentsUrl}
+            />
+          )}
+        </View>
+        <View
+          style={{
+            width: imageWidth,
+            display: "flex",
+            flexDirection: "column",
+            paddingHorizontal: 30,
             alignItems: 'flex-end'
           }}
         >
@@ -245,5 +277,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingHorizontal: 5,
     paddingTop: 6,
+  },
+  blueText: {
+    color: "blue",
+    textDecorationLine:'underline'
   },
 });

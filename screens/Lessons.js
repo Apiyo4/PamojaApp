@@ -42,8 +42,9 @@ export default function Lessons() {
       topic: "jvdhhdvhdhv",
       course: "hahhhhefh",
       description: "hvhvdhhdvzhdv",
-      isTaught: true,
+      isTaught: false,
       teachId: "64405ff67df10a959871ebe5",
+      comments: []
     },
   ]);
   const { user, getUserProfile, isLoggedIn } = useAuth();

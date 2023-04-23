@@ -15,6 +15,7 @@ const screenWidth = Dimensions.get("window").width;
 const imageWidth = screenWidth * 0.9;
 
 export default function Lesson({ lessons, user }) {
+  const [isShowComments, setIsShowComments] = useState(false);
   const base_url = `https://pamoja-backend.onrender.com/api`;
   // const base_url = `http://localhost:5000/api`;
   console.log({ lessons });
@@ -65,12 +66,23 @@ export default function Lesson({ lessons, user }) {
             paddingHorizontal: 30,
           }}
         >
-          <Text style={[styles.title, styles.titlePadding]}>Comments:</Text>
-          <Comments
-            comments={item.comments}
-            comment={"comment"}
-            url={commentsUrl}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              setIsShowComments((isShowComments) => !isShowComments)
+            }
+          >
+            <Text style={[styles.title, styles.titlePadding, styles.blueText]}>
+              {isShowComments ? "Close" : "Chat"}
+            </Text>
+          </TouchableOpacity>
+
+          {isShowComments && (
+            <Comments
+              comments={item.comments}
+              comment={"comment"}
+              url={commentsUrl}
+            />
+          )}
         </View>
 
         <View
@@ -115,7 +127,6 @@ export default function Lesson({ lessons, user }) {
   return (
     <RequireAuth>
       <View style={styles.container}>
-        <Text>Lessons</Text>
         <FlatList
           data={lessons}
           keyExtractor={(item) => item.id}
@@ -162,5 +173,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingHorizontal: 5,
     paddingTop: 6,
+  },
+  blueText: {
+    color: "blue",
+    textDecorationLine:'underline'
   },
 });

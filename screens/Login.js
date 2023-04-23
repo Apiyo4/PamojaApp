@@ -20,8 +20,8 @@ export default function Login() {
   // const base_url = 'http://localhost:5000/api'
   const { getUserProfile } = useAuth();
   React.useEffect(()=>{},[isLoading])
-  const submit = () => {
-    axios
+  const submit = async() => {
+    await axios
       .post(`${base_url}/users/login`, {
         email: emailRef.current.value,
         password: passwordRef.current.value,

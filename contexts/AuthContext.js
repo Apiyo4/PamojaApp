@@ -8,7 +8,7 @@ const base_url = "https://pamoja-backend.onrender.com/api";
 // const base_url = "http://localhost:5000/api";
 
 export function AuthProvider(props) {
-  let [user, setUser] = React.useState(null);
+  let { user, setUser } = props.value;
   const isLoggedIn = props.value.setIsLoggedIn;
   const setIsLoggedIn = props.value.setIsLoggedIn;
   const setCurrentUser = (userDTO) => {

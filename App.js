@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { StyleSheet, TouchableOpacity} from "react-native";
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -22,6 +22,7 @@ let initialState = sessionStorage.getItem("token") === null ? false : true;
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(initialState);
+  const [user, setUser] = useState(null)
   React.useEffect(() => {}, [isLoggedIn, setIsLoggedIn]);
 
   const logout = () => {
@@ -30,6 +31,13 @@ export default function App() {
       setIsLoggedIn(false)   
     }
   };
+  useEffect(() => {
+    if (!user) {
+      if (sessionStorage.getItem("token")) {
+        getUserProfile();
+      }
+    }
+  }, [user, isLoggedIn]);
   const AppStack = () => {
     return (
       <Stack.Navigator>
@@ -47,7 +55,7 @@ export default function App() {
     );
   };
   return (
-    <AuthProvider value={{ isLoggedIn, setIsLoggedIn }}>
+    <AuthProvider value={{ isLoggedIn, setIsLoggedIn , user, setUser}}>
       <NavigationContainer>
         <Drawer.Navigator
           initialRouteName="Login"

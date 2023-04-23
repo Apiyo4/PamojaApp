@@ -55,6 +55,7 @@ export default function BugForm() {
           letterSpacing: 0,
           textAlign: "center",
           paddingBottom: 24,
+          textDecorationLine: 'underline',
         }}
       >
         Add a bug

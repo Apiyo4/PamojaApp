@@ -39,7 +39,7 @@ export default function Login() {
         getUserProfile();
 
         setTimeout(() => {
-          navigation.navigate("Books");
+          navigation.navigate("Books",  { screen: 'Books' });
         }, 2000);
         setIsLoading(false);
       })
@@ -136,7 +136,7 @@ export default function Login() {
         </TouchableOpacity>
         <Text style={{ fontSize: 18, textAlign: "center" }}>
           Don't have an account?{" "}
-          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Signup",  { screen: 'Signup' })}>
             <Text style={{ color: "blue" }}>Signup</Text>
           </TouchableOpacity>
         </Text>

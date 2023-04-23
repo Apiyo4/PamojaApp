@@ -74,7 +74,7 @@ export function RequireAuth({ children }) {
       }
 
       if (!auth.user && !token) {
-        navigation.navigate("Login");
+        navigation.navigate("Login", { screen: 'Login' });
       }
     };
 

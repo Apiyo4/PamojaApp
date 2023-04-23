@@ -46,6 +46,7 @@ export default function Books({ navigation }) {
             fontWeight: "700",
             paddingLeft: "18px",
             textAlign: "left",
+            textDecorationLine:'underline'
           }}
         >
           {isAddBook ? "Cancel" : "Add a book"}

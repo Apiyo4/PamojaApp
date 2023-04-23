@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
-import { StyleSheet, TouchableOpacity} from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,26 +20,28 @@ import { useState } from "react";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-const getStorageItem = async()=>{
-  return await AsyncStorage.getItem('token');
-}
-const removeStorageItem = async()=>{
-await AsyncStorage.removeItem('token');
-}
+const getStorageItem = async () => {
+  return await AsyncStorage.getItem("token");
+};
+const removeStorageItem = async () => {
+  await AsyncStorage.removeItem("token");
+};
 let initialState = getStorageItem() === null ? false : true;
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(initialState);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
   // const {getUserProfile} = useAuth()
-  React.useEffect(() => {}, [isLoggedIn, setIsLoggedIn]);
+  const credits = user
+    ? `${user.credits} credits available `
+    : `Loading... `;
+  React.useEffect(() => {}, [isLoggedIn, setIsLoggedIn, user]);
 
-  const logout = async() => {
-    if (await getStorageItem() != 'null'){
-      await removeStorageItem()
-      setIsLoggedIn(false)   
+  const logout = async () => {
+    if ((await getStorageItem()) != "null") {
+      await removeStorageItem();
+      setIsLoggedIn(false);
     }
-
   };
   // useEffect(() => {
   //   if (!user) {
@@ -50,9 +52,14 @@ export default function App() {
   // }, [user, isLoggedIn]);
   const AppStack = () => {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTitleAlign: "center",
+          colorTint: "#d6a7b1",
+        }}
+      >
         <Stack.Screen
-          name="Login1"
+          name="Login"
           component={Login}
           options={{ headerShown: false }}
         />
@@ -65,13 +72,21 @@ export default function App() {
     );
   };
   return (
-    <AuthProvider value={{ isLoggedIn, setIsLoggedIn , user, setUser}}>
+    <AuthProvider value={{ isLoggedIn, setIsLoggedIn, user, setUser }}>
       <NavigationContainer>
         <Drawer.Navigator
           initialRouteName="Login"
           screenOptions={{
             unmountOnBlur: true,
+            headerTitleAlign: "center",
+            colorTint: "#d6a7b1",
+            drawerStyle: {
+              width: 240,
+              paddingTop: 50,
+              paddingHorizontal: 16,
+            },
           }}
+          drawerContentContainerStyle={{ paddingTop: 20 }}
         >
           {!isLoggedIn && (
             <Drawer.Screen
@@ -83,7 +98,7 @@ export default function App() {
                   <MaterialCommunityIcons
                     name="login"
                     size={24}
-                    color="black"
+                    color="#e98fb6"
                   />
                 ),
               }}
@@ -96,8 +111,10 @@ export default function App() {
               options={{
                 title: "Books",
                 drawerIcon: () => (
-                  <MaterialIcons name="library-books" size={24} color="black" />
+                  <MaterialIcons name="library-books" size={24} color="#e98fb6" />
                 ),
+                headerTintColor: "#d6a7b1",
+                headerTitle: credits,
                 headerRight: () => (
                   <TouchableOpacity
                     onPress={logout}
@@ -106,10 +123,16 @@ export default function App() {
                     <MaterialCommunityIcons
                       name="logout"
                       size={24}
-                      color="black"
+                      color="#e98fb6"
                     />
                   </TouchableOpacity>
                 ),
+                drawerLabelStyle: {
+                  color: '#e98fb6',
+                },
+                style: {
+                  marginTop: 60,
+                },
               }}
             />
           )}
@@ -119,7 +142,9 @@ export default function App() {
               component={Bugs}
               options={{
                 title: "Bugs",
-                drawerIcon: () => <Entypo name="bug" size={24} color="black" />,
+                drawerIcon: () => <Entypo name="bug" size={24} color="#e98fb6" />,
+                headerTintColor: "#d6a7b1",
+                headerTitle: credits,
                 headerRight: () => (
                   <TouchableOpacity
                     onPress={logout}
@@ -128,10 +153,13 @@ export default function App() {
                     <MaterialCommunityIcons
                       name="logout"
                       size={24}
-                      color="black"
+                      color="#e98fb6"
                     />
                   </TouchableOpacity>
                 ),
+                drawerLabelStyle: {
+                  color: '#e98fb6',
+                },
               }}
             />
           )}
@@ -145,9 +173,11 @@ export default function App() {
                   <FontAwesome5
                     name="chalkboard-teacher"
                     size={24}
-                    color="black"
+                    color="#e98fb6"
                   />
                 ),
+                headerTintColor: "#d6a7b1",
+                headerTitle: credits,
                 headerRight: () => (
                   <TouchableOpacity
                     onPress={logout}
@@ -156,10 +186,13 @@ export default function App() {
                     <MaterialCommunityIcons
                       name="logout"
                       size={24}
-                      color="black"
+                      color="#e98fb6"
                     />
                   </TouchableOpacity>
                 ),
+                drawerLabelStyle: {
+                  color: '#e98fb6',
+                },
               }}
             />
           )}
@@ -175,5 +208,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  drawer: {
+    padding: 50,
   },
 });

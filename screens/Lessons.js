@@ -44,9 +44,10 @@ export default function Lessons() {
             fontWeight: "700",
             paddingLeft: "18px",
             textAlign: "left",
+            textDecorationLine: 'underline',
           }}
         >
-          {isAddLesson ? "Cancel" : "Add a Lesson"}
+          {isAddLesson ? "Cancel" : "Book a Lesson"}
         </Text>
       </TouchableOpacity>
       {isAddLesson ? (

@@ -216,7 +216,7 @@ export default function Book({ books }) {
                 fontWeight: "700",
               }}
             >
-              { user.id && item.user == user.id ? "Give" : "Get"} 
+              { user.id && item.user == user._id ? "Give" : "Get"} 
             </Text>
           </TouchableOpacity>
         </View>

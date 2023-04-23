@@ -28,7 +28,6 @@ export default function BugForm() {
  
   const submit = async(event) => {
     event.preventDefault();
-    debugger
     await axios()
       .post(`${base_url}/bugs`, {
         title: titleRef.current.value,

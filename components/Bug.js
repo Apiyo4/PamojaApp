@@ -93,7 +93,6 @@ export default function Bug({ bugs, user }) {
   return (
     <RequireAuth>
       <View style={styles.container}>
-        <Text>Bugs</Text>
         <FlatList
           data={bugs}
           keyExtractor={(item) => item.id}

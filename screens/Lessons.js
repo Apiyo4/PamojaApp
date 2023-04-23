@@ -1,10 +1,12 @@
 
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Lesson from '../components/Lesson';
 import { useState } from "react";
 import { RequireAuth, useAuth } from "../contexts/AuthContext";
+import LessonForm from '../components/LessonForm';
 
 export default function Lessons() {
+  const [isAddLesson, setIsAddLesson] = useState(false);
   const [lessons, setLessons] = useState([ {_id : "644098cf3595a1fa3aee56aa",
   user : "64404e0f7df10a95986e68b9",
   topic: "jvdhhdvhdhv",
@@ -24,16 +26,38 @@ export default function Lessons() {
   return (
     // <RequireAuth>
     <View style={styles.container}>
-      <Lesson lessons={lessons.filter(lesson=> !lesson.isTaught)} user={user} />
+       <TouchableOpacity
+        style={{
+          color: "#fff",
+          marginTop: "2rem",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+          display: "flex",
+          flexDirection: "row",
+        }}
+        onPress={() => setIsAddLesson(isAddLesson => !isAddLesson)}
+      >
+        <Text
+          style={{
+            color: "blue",
+            fontSize: 18,
+            fontWeight: "700",
+            paddingLeft: "18px",
+            textAlign: "left"
+          }}
+        >
+          {isAddLesson ? "Cancel" : "Add a Lesson"}
+        </Text>
+      </TouchableOpacity>
+      { isAddLesson ? <LessonForm /> :
+      <Lesson lessons={lessons.filter(lesson=> !lesson.isTaught)} user={user} />}
     </View>
     // </RequireAuth>
   );
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: "#d6a7b1",
+  },
+});

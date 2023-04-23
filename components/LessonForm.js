@@ -14,70 +14,37 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Input } from "react-native-elements";
 import * as ImagePicker from "react-native-image-picker";
 
-export default function BookForm() {
+export default function LessonForm() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [imageData, setImageData] = useState(null);
-  const titleRef = useRef();
+  const topicRef = useRef();
   const descriptionRef = useRef();
-  const locationRef = useRef();
-  const authorRef = useRef();
-  const editionRef = useRef();
-  const photoRef = useRef();
+  const courseRef = useRef();
   const navigation = useNavigation();
   const base_url = "https://pamoja-backend.onrender.com/api";
   // const base_url = "http://localhost:5000/api";
   const { getUserProfile } = useAuth();
   React.useEffect(() => {}, [isLoading]);
-  const handleImageUpload = (event) => {
-    const options = {
-      mediaType: "photo",
-      maxWidth: 300,
-      maxHeight: 300,
-      quality: 0.5,
-    };
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-        setIsError(response.error);
-      } else {
-        setImageData(response.assets[0].uri);
-      }
-    });
-  };
+
   const submit = async (event) => {
     event.preventDefault();
-    const newBook = {
-      title: titleRef.current.value,
-      description: descriptionRef.current.value,
-      location: locationRef.current.value,
-      photo: !imageData
-        ? "https://static.vecteezy.com/system/resources/previews/000/541/091/large_2x/green-book-on-white-background-vector.jpg"
-        : imageData,
-      author: authorRef.current.value,
-      edition: editionRef.value ? editionRef.current.value : "1st",
-    };
+    debugger
     await axios()
-      .post(`${base_url}/books`, newBook)
+      .post(`${base_url}/lessons`, {
+        topic: topicRef.current.value,
+        course: courseRef.current.value,
+        description: descriptionRef.current.value,
+      })
       .then((res) => {
-        titleRef.current.value = null;
+        topicRef.current.value = null;
         descriptionRef.current.value = null;
-        locationRef.current.value = null;
-        setImageData(null);
-        authorRef.current.value = null;
-        editionRef.current.value = null;
+        courseRef.current.value = null;
       })
       .catch((error) => {
-        if (error.response.data.message) {
-          setIsError(error.response.data.message);
-        } else {
-          setIsError(error.message);
-        }
+        alert(error.message);
       });
-    setIsLoading(false);
   };
+
   return (
     <View style={styles.container}>
       <Text
@@ -91,12 +58,12 @@ export default function BookForm() {
           paddingBottom: 24,
         }}
       >
-        Add a book
+        Book a lesson
       </Text>
       <Text style={{ fontSize: 18, color: "red" }}>{isError}</Text>
       <View>
         <TextInput
-          placeholder="Enter title"
+          placeholder="Enter topic"
           style={{
             paddingRight: "4.5rem",
             height: 60,
@@ -109,11 +76,11 @@ export default function BookForm() {
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
-          ref={titleRef}
-          onChangeText={(e) => (titleRef.current.value = e)}
+          ref={topicRef}
+          onChangeText={(e) => (topicRef.current.value = e)}
         />
         <TextInput
-          placeholder="Enter author"
+          placeholder="Enter course"
           style={{
             paddingRight: "4.5rem",
             height: 60,
@@ -126,45 +93,11 @@ export default function BookForm() {
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
-          ref={authorRef}
-          onChangeText={(e) => (authorRef.current.value = e)}
+          ref={courseRef}
+          onChangeText={(e) => (courseRef.current.value = e)}
         />
         <TextInput
-          placeholder="Enter book edition"
-          style={{
-            paddingRight: "4.5rem",
-            height: 60,
-            backgroundColor: "#fff",
-            borderRadius: 20,
-            borderWidth: 2,
-            borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
-            fontSize: 18,
-          }}
-          placeholderTextColor="#000000"
-          ref={editionRef}
-          onChangeText={(e) => (editionRef.current.value = e)}
-        />
-        <TextInput
-          placeholder="Enter location"
-          style={{
-            paddingRight: "4.5rem",
-            height: 60,
-            backgroundColor: "#fff",
-            borderRadius: 20,
-            borderWidth: 2,
-            borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
-            fontSize: 18,
-          }}
-          placeholderTextColor="#000000"
-          ref={locationRef}
-          onChangeText={(e) => (locationRef.current.value = e)}
-        />
-         <TextInput
-          placeholder="Enter book description"
+          placeholder="Enter description"
           placeholderTextColor="#000000"
           style={{
             paddingRight: "4.5rem",
@@ -180,26 +113,6 @@ export default function BookForm() {
           ref={descriptionRef}
           onChangeText={(e) => (descriptionRef.current.value = e)}
         />
-        <TouchableOpacity
-          onPress={handleImageUpload}
-          style={{
-            paddingRight: "4.5rem",
-            height: 60,
-            backgroundColor: "#fff",
-            borderRadius: 20,
-            borderWidth: 2,
-            borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            justifyContent: "center",
-            fontSize: 18,
-          }}
-        >
-          <Text style={{ fontSize: 18 }}>
-            {imageData ? "Image Uploaded" : "Select Image"}
-          </Text>
-        </TouchableOpacity>
-       
-
         <TouchableOpacity
           style={{
             marginBottom: "32px",
@@ -224,7 +137,7 @@ export default function BookForm() {
               paddingLeft: "18px",
             }}
           >
-            Add book
+            Book lesson
           </Text>
         </TouchableOpacity>
       </View>

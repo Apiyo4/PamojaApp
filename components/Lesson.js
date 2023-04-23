@@ -13,7 +13,7 @@ import { RequireAuth } from "../contexts/AuthContext";
 const screenWidth = Dimensions.get("window").width;
 const imageWidth = screenWidth * 0.9;
 
-export default function Bug({ bugs, user }) {
+export default function Lesson({ lessons, user }) {
   const renderBook = ({ item }) => {
     return (
       <View style={styles.listI} key={item._id}>
@@ -25,8 +25,8 @@ export default function Bug({ bugs, user }) {
             paddingHorizontal: 12,
           }}
         >
-          <Text style={[styles.title, styles.titlePadding]}>Title:</Text>
-          <Text style={styles.titlePadding}>{item.title}</Text>
+          <Text style={[styles.title, styles.titlePadding]}>Topic:</Text>
+          <Text style={styles.titlePadding}>{item.topic}</Text>
         </View>
         <View
           style={{
@@ -93,11 +93,11 @@ export default function Bug({ bugs, user }) {
   return (
     <RequireAuth>
       <View style={styles.container}>
-        <Text>Bugs</Text>
+        <Text>Lessons</Text>
         <FlatList
-          data={bugs}
+          data={lessons}
           keyExtractor={(item) => item.id}
-          extraData={bugs}
+          extraData={lessons}
           renderItem={renderBook}
         />
       </View>

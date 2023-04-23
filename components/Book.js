@@ -159,13 +159,14 @@ export default function Book({ books, user }) {
             display: "flex",
             flexDirection: "column",
             paddingHorizontal: 12,
+            alignItems: 'flex-end'
           }}
         >
           <TouchableOpacity
             style={{
-              marginBottom: "32px",
-              borderRadius: 20,
-              height: 60,
+              marginTop: "8px",
+              borderRadius: 10,
+              height: 40,
               color: "#fff",
               backgroundColor: "#3182CE",
               justifyContent: "center",
@@ -173,6 +174,7 @@ export default function Book({ books, user }) {
               display: "flex",
               flexDirection: "row",
               marginTop: 8,
+              width: 90
 
             }}
             onPress={() =>  console.log('get')}
@@ -182,7 +184,6 @@ export default function Book({ books, user }) {
                 color: "#fff",
                 fontSize: 18,
                 fontWeight: "700",
-                paddingLeft: "18px",
               }}
             >
               { user.id && item.user == user.id ? "Give" : "Get"} 

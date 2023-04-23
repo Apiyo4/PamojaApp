@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import { StyleSheet, TouchableOpacity} from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -18,26 +19,35 @@ import { useState } from "react";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-let initialState = sessionStorage.getItem("token") === null ? false : true;
+
+const getStorageItem = async()=>{
+  return await AsyncStorage.getItem('token');
+}
+const removeStorageItem = async()=>{
+await AsyncStorage.removeItem('token');
+}
+let initialState = getStorageItem() === null ? false : true;
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(initialState);
   const [user, setUser] = useState(null)
+  // const {getUserProfile} = useAuth()
   React.useEffect(() => {}, [isLoggedIn, setIsLoggedIn]);
 
-  const logout = () => {
-    if (sessionStorage.hasOwnProperty("token")) {
-      sessionStorage.clear();
+  const logout = async() => {
+    if (await getStorageItem() != 'null'){
+      await removeStorageItem()
       setIsLoggedIn(false)   
     }
+
   };
-  useEffect(() => {
-    if (!user) {
-      if (sessionStorage.getItem("token")) {
-        getUserProfile();
-      }
-    }
-  }, [user, isLoggedIn]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     if (getStorageItem() != null) {
+  //       getUserProfile();
+  //     }
+  //   }
+  // }, [user, isLoggedIn]);
   const AppStack = () => {
     return (
       <Stack.Navigator>

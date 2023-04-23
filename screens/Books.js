@@ -32,24 +32,13 @@ export default function Books({navigation}) {
   
   const { user, getUserProfile, isLoggedIn } = useAuth();
 
-  useEffect(() => {
-
-    if (!user.id) {
-      if (sessionStorage.getItem("token")) {
-        getUserProfile();
-      }
-    }
-   
-  }, [user, isLoggedIn]);
-  
-  console.log(user);
 
   return (
-    <RequireAuth>
+    // <RequireAuth>
       <View style={styles.container}>
         <Book books={books} user={user} />
       </View>
-    </RequireAuth>
+    // </RequireAuth>
   );
 }
 const styles = StyleSheet.create({

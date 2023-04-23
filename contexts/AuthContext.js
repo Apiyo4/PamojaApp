@@ -1,8 +1,10 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import axios from "../axios";
+import axios from "../axios/index";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AuthContext = React.createContext(null);
+
 
 const base_url = "https://pamoja-backend.onrender.com/api";
 // const base_url = "http://localhost:5000/api";
@@ -43,7 +45,7 @@ export function AuthProvider(props) {
           alert(error.response.data.message);
         });
     };
-    
+
     return {
       user,
       getUserProfile,
@@ -65,17 +67,20 @@ export function RequireAuth({ children }) {
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      if (sessionStorage.getItem("token")) {
+      // if (sessionStorage.getItem("token")) {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
         await auth.getUserProfile();
       }
 
-      if (!auth.user && !sessionStorage.getItem("token")) {
+      if (!auth.user && !token) {
         navigation.navigate("Login");
       }
     };
 
     checkAuthentication();
   }, [auth, navigation]);
+  // return auth.user || sessionStorage.getItem("token") ? children : null;
 
-  return auth.user || sessionStorage.getItem("token") ? children : null;
+  return auth.user ? children : null;
 }

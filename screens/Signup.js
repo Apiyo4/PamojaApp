@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Signup() {
   const [isError, setIsError] = useState(false);
@@ -24,8 +25,8 @@ export default function Signup() {
   
 
   React.useEffect(()=>{},[isLoading])
-  const submit = () => {
-    axios
+  const submit = async() => {
+    await axios
       .post(`${base_url}/users`, {
         name: nameRef.current.value,
         email: emailRef.current.value,
@@ -34,7 +35,8 @@ export default function Signup() {
       .then((res) => {
         setIsLoading(true)
         if (res.data.token) {
-          sessionStorage.setItem("token", res.data.token);
+          // sessionStorage.setItem("token", res.data.token);
+          AsyncStorage.setItem('token', res.data.token);
         }
         getUserProfile();
 

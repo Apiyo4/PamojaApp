@@ -10,6 +10,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../contexts/AuthContext";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 export default function Login() {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,9 +30,12 @@ export default function Login() {
         password: passwordRef.current.value,
       })
       .then((res) => {
+        // debugger
         setIsLoading(true)
         if (res.data.token) {
-          sessionStorage.setItem("token", res.data.token);
+          // sessionStorage.setItem("token", res.data.token);
+
+          AsyncStorage.setItem("token", JSON.stringify(res.data.token));
         }
         getUserProfile();
 
@@ -39,9 +45,15 @@ export default function Login() {
         setIsLoading(false);
       })
       .catch((error) => {
-        setIsError(error.response.data.message);
+        if(error.response.data.message){
+          setIsError(error.response.data.message);
+        }else{
+          setIsError(error.message);
+        }
+        
       });
     setIsLoading(false);
+  
   };
   return (
     <View style={styles.container}>

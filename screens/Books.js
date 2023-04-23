@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Book from "../components/Book";
+import BookForm from "../components/BookForm";
 import { RequireAuth, useAuth } from "../contexts/AuthContext";
 
-export default function Books({navigation}) {
+export default function Books({ navigation }) {
+  const [isAddBook, setIsAddBook] = useState(false);
   const [books, setBooks] = useState([
     {
       isExchanged: true,
@@ -31,15 +33,43 @@ export default function Books({navigation}) {
       isExchanged: false,
     },
   ]);
-  
-  const { user, getUserProfile, isLoggedIn } = useAuth();
 
+  const { user, getUserProfile, isLoggedIn } = useAuth();
+  useEffect(() => {}, [isAddBook]);
 
   return (
     // <RequireAuth>
-      <View style={styles.container}>
-        <Book books={books.filter(book=>!book.isExchanged)} user={user} />
-      </View>
+    <View style={[styles.container]}>
+      <TouchableOpacity
+        style={{
+          color: "#fff",
+          marginTop: "2rem",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+          display: "flex",
+          flexDirection: "row",
+        }}
+        onPress={() => setIsAddBook(isAddBook => !isAddBook)}
+      >
+        <Text
+          style={{
+            color: "blue",
+            fontSize: 18,
+            fontWeight: "700",
+            paddingLeft: "18px",
+            textAlign: "left"
+          }}
+        >
+          {isAddBook ? "Cancel" : "Add a book"}
+        </Text>
+      </TouchableOpacity>
+
+      {isAddBook ? (
+        <BookForm />
+      ) : (
+        <Book books={books.filter((book) => !book.isExchanged)}/>
+      )}
+    </View>
     // </RequireAuth>
   );
 }
@@ -47,7 +77,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#d6a7b1",
-    alignItems: "center",
-    justifyContent: "center",
   },
+ 
 });

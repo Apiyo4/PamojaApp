@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Button } from "react-native-elements";
-import { RequireAuth } from "../contexts/AuthContext";
+import { RequireAuth, useAuth } from "../contexts/AuthContext";
 
 const screenWidth = Dimensions.get("window").width;
 const imageWidth = screenWidth * 0.9;
@@ -66,7 +66,8 @@ const commonWords = [
   "what",
   "and—their",
 ];
-export default function Book({ books, user }) {
+export default function Book({ books }) {
+  const { user } = useAuth();
   const renderBook = ({ item }) => {
     const edition = `Edition: ${item.edition} `;
     const tags = [
@@ -196,7 +197,6 @@ export default function Book({ books, user }) {
   return (
     <RequireAuth>
       <View style={styles.container}>
-        <Text>Books</Text>
         <FlatList
           data={books}
           keyExtractor={(item) => item.id}
@@ -211,7 +211,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#d6a7b1",
-    padding: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
     color: "black",
   },
   listI: {

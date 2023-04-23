@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import React, { useState, useRef } from "react";
-import { ListItem } from '@rneui/themed';
-import { Avatar } from '@rneui/themed';
+import { ListItem } from "@rneui/themed";
+import { Avatar } from "@rneui/themed";
 
 import axios from "../axios/index";
 import { useAuth } from "../contexts/AuthContext";
@@ -18,23 +18,23 @@ const screenWidth = Dimensions.get("window").width;
 const imageWidth = screenWidth * 0.9;
 
 const Comments = ({ comments, comment, url }) => {
-    const { user } = useAuth();
-    const commentRef = useRef();
-  
-    const submit = async(event) => {
-      event.preventDefault();
-      await axios()
-        .put(`${url}`, {
-          comment: commentRef.current.value,
-          userId: user._id,
-        })
-        .then((res) => {
-          commentRef.current.value = null;
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    };
+  const { user } = useAuth();
+  const commentRef = useRef();
+
+  const submit = async (event) => {
+    event.preventDefault();
+    await axios()
+      .put(`${url}`, {
+        comment: commentRef.current.value,
+        userId: user._id,
+      })
+      .then((res) => {
+        commentRef.current.value = null;
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
 
   return (
     <View>
@@ -45,11 +45,10 @@ const Comments = ({ comments, comment, url }) => {
             key={index}
             bottomDivider
             containerStyle={{ marginBottom: 18 }}
-          > 
-          <Avatar source={{ uri: item.userAvatar }} />
+          >
+            <Avatar source={{ uri: item.userAvatar }} />
             <ListItem.Content>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                
                 <ListItem.Title style={{ marginLeft: 2 }}>
                   {item.username}
                 </ListItem.Title>
@@ -63,15 +62,30 @@ const Comments = ({ comments, comment, url }) => {
         keyExtractor={(item, index) => index.toString()}
       />
 
-      <TextInput placeholder={`Add a ${comment}...`} ref={commentRef} 
-          onChangeText={(e) => (commentRef.current.value = e)} />
+      <TextInput
+        style={{
+          paddingRight: "4.5rem",
+          height: 60,
+          backgroundColor: "#fff",
+          borderRadius: 20,
+          borderWidth: 2,
+          borderColor: "#3AA5F3",
+          paddingLeft: "2rem",
+          marginVertical: "1rem",
+          fontSize: 18,
+          
+        }}
+        placeholder={`Add a ${comment}...`}
+        ref={commentRef}
+        onChangeText={(e) => (commentRef.current.value = e)}
+      />
 
       <TouchableOpacity
         style={{
           marginTop: 18,
           alignItems: "flex-start",
           justifyContent: "flex-start",
-          textDecoration: "underline"
+          textDecoration: "underline",
         }}
         onPress={submit}
       >

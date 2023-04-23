@@ -76,30 +76,27 @@ export default function Book({ books }) {
   const renderBook = ({ item }) => {
     const edition = `Edition: ${item.edition} `;
     const commentsUrl = `${base_url}/books/${item._id}/comments`;
-    const tags = [
-      ...new Set(
-        item.description
-          .split(" ")
-          .filter((word) => !commonWords.includes(word.toLowerCase()))
-          .slice(0, 16)
-      ),
-    ];
-    console.log(user, 'user');
-    const removePunctuation = (word) => {
-      const lastChar = word.slice(-1);
-      if (
-        lastChar === "." ||
-        lastChar === "," ||
-        lastChar === ":" ||
-        lastChar === "!" ||
-        lastChar === "?" ||
-        lastChar === ";"
-      ) {
-        return word.slice(0, -1);
+    
+    const exchangeBook = async () => {
+      if (item.user === user._id) {
+        await axios()
+          .put(giveUrl, { ...item, isExchanged: true })
+          .then((res) => {})
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
       } else {
-        return word;
+        await axios()
+          .put(getUrl, {...item, purchaseId: user._id })
+          .then((res) => {
+            alert("Waiting for seller");
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
       }
     };
+    
     return (
       <View style={styles.listI} key={item._id}>
         <View>
@@ -210,7 +207,7 @@ export default function Book({ books }) {
               width: 90
 
             }}
-            onPress={() =>  console.log('get')}
+            onPress={exchangeBook}
           >
             <Text
               style={{
@@ -226,6 +223,7 @@ export default function Book({ books }) {
       </View>
     );
   };
+  
   return (
     <RequireAuth>
       <View style={styles.container}>

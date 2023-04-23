@@ -18,10 +18,28 @@ export default function Lesson({ lessons, user }) {
   const [isShowComments, setIsShowComments] = useState(false);
   const base_url = `https://pamoja-backend.onrender.com/api`;
   // const base_url = `http://localhost:5000/api`;
-  console.log({ lessons });
   const renderBook = ({ item }) => {
     const commentsUrl = `${base_url}/lessons/${item._id}/comments`;
-
+    const startSession = async() => {
+      if (item.user !== user._id) {
+        await axios()
+          .put(teachUrl, { ...item, teachId: user._id })
+          .then((res) => {
+            alert("Waiting for student to approve");
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
+      } else {
+        await axios()
+          .put(attendUrl, { ...item, isTaught: true })
+          .then((res) => {})
+          .catch((error) => {
+            alert(error.response.data.message);
+          });
+      }
+    };
+   
     return (
       <View style={styles.listI} key={item._id}>
         <View
@@ -108,7 +126,7 @@ export default function Lesson({ lessons, user }) {
               marginTop: 8,
               width: 120,
             }}
-            onPress={() => console.log("get")}
+            onPress={startSession}
           >
             <Text
               style={{

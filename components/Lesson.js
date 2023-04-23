@@ -9,12 +9,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { RequireAuth } from "../contexts/AuthContext";
+import Comments from "./Comments";
 
 const screenWidth = Dimensions.get("window").width;
 const imageWidth = screenWidth * 0.9;
 
 export default function Lesson({ lessons, user }) {
+  const base_url = `https://pamoja-backend.onrender.com/api`;
+  // const base_url = `http://localhost:5000/api`;
+  console.log({ lessons });
   const renderBook = ({ item }) => {
+    const commentsUrl = `${base_url}/lessons/${item._id}/comments`;
+
     return (
       <View style={styles.listI} key={item._id}>
         <View
@@ -22,7 +28,7 @@ export default function Lesson({ lessons, user }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "row",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Topic:</Text>
@@ -33,7 +39,7 @@ export default function Lesson({ lessons, user }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "row",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Course:</Text>
@@ -45,7 +51,7 @@ export default function Lesson({ lessons, user }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "column",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Description:</Text>
@@ -56,7 +62,23 @@ export default function Lesson({ lessons, user }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "column",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
+          }}
+        >
+          <Text style={[styles.title, styles.titlePadding]}>Comments:</Text>
+          <Comments
+            comments={item.comments}
+            comment={"comment"}
+            url={commentsUrl}
+          />
+        </View>
+
+        <View
+          style={{
+            width: imageWidth,
+            display: "flex",
+            flexDirection: "column",
+            paddingHorizontal: 30,
             alignItems: "flex-end",
           }}
         >

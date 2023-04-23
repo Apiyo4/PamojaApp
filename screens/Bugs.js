@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "../axios";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Bug from "../components/Bug";
 import BugForm from "../components/BugFom";
@@ -6,24 +7,21 @@ import { RequireAuth, useAuth } from "../contexts/AuthContext";
 
 export default function Bugs() {
   const [isAddBug, setIsAddBug] = useState(false);
-  const [bugs, setBugs] = useState([
-    {
-      _id: "64408c32ec10ee1a7ff2a65e",
-      user: "64405ff67df10a959871ebe5",
-      title: "Rails app not running",
-      description: "You need to add files in /var/www/html and run bin",
-      course: "Computer science",
-    },
-    {
-      _id: "64408c32ec10ee1a7ff2a65e1",
-      user: "64405ff67df10a959871ebe5",
-      title: "Rails app not running",
-      description: "You need to add files in /var/www/html and run bin",
-      course: "Computer science",
-    },
-  ]);
+  const [bugs, setBugs] = useState([]);
   const { user, getUserProfile, isLoggedIn } = useAuth();
-
+  const base_url = "https://pamoja-backend.onrender.com/api";
+  // const base_url = "http://localhost:5000/api";
+  useEffect(() => {
+    const getBugs = async() => {
+      await axios()
+        .get(`${base_url}/bugs`)
+        .then((res) => {
+          setBugs(res.data);
+        })
+        .catch((error) => alert(error.response.data));
+    };
+    getBugs()
+  }, [bugs, setBugs]);
   return (
     // <RequireAuth>
     <View style={styles.container}>
@@ -36,7 +34,7 @@ export default function Bugs() {
           display: "flex",
           flexDirection: "row",
         }}
-        onPress={() => setIsAddBug(isAddBug => !isAddBug)}
+        onPress={() => setIsAddBug((isAddBug) => !isAddBug)}
       >
         <Text
           style={{
@@ -44,7 +42,7 @@ export default function Bugs() {
             fontSize: 18,
             fontWeight: "700",
             paddingLeft: "18px",
-            textAlign: "left"
+            textAlign: "left",
           }}
         >
           {isAddBug ? "Cancel" : "Add a bug"}
@@ -53,7 +51,7 @@ export default function Bugs() {
 
       {isAddBug ? <BugForm /> : <Bug bugs={bugs} user={user} />}
     </View>
-   // </RequireAuth> 
+    // </RequireAuth>
   );
 }
 const styles = StyleSheet.create({

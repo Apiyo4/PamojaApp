@@ -121,7 +121,7 @@ export default function Book({ books }) {
             width: imageWidth,
             display: "flex",
             flexDirection: "row",
-            paddingHorizontal: 12,
+            paddingHorizontal: 30,
           }}
         >
           <Text style={[styles.title, styles.titlePadding]}>Edition:</Text>

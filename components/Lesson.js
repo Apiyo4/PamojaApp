@@ -72,7 +72,7 @@ export default function Lesson({ lessons, user }) {
               display: "flex",
               flexDirection: "row",
               marginTop: 8,
-              width: 90,
+              width: 120,
             }}
             onPress={() => console.log("get")}
           >
@@ -83,7 +83,7 @@ export default function Lesson({ lessons, user }) {
                 fontWeight: "700",
               }}
             >
-              {user.id && item.user == user.id ? "Give" : "Get"}
+              {item.user === user._id ? "Attended?" : "Teach"}
             </Text>
           </TouchableOpacity>
         </View>

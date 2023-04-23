@@ -51,42 +51,6 @@ export default function Bug({ bugs, user }) {
           <Text style={[styles.title, styles.titlePadding]}>Description:</Text>
           <Text style={styles.titlePadding}>{item.description}</Text>
         </View>
-        <View
-          style={{
-            width: imageWidth,
-            display: "flex",
-            flexDirection: "column",
-            paddingHorizontal: 12,
-            alignItems: "flex-end",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              marginTop: "8px",
-              borderRadius: 10,
-              height: 40,
-              color: "#fff",
-              backgroundColor: "#3182CE",
-              justifyContent: "center",
-              alignItems: "center",
-              display: "flex",
-              flexDirection: "row",
-              marginTop: 8,
-              width: 90,
-            }}
-            onPress={() => console.log("get")}
-          >
-            <Text
-              style={{
-                color: "#fff",
-                fontSize: 18,
-                fontWeight: "700",
-              }}
-            >
-              {user.id && item.user == user.id ? "Give" : "Get"}
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     );
   };

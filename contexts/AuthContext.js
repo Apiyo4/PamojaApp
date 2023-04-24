@@ -1,10 +1,9 @@
 import React, { useState, useContext, useMemo, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import axios from "../axios/index";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Axios from "../axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AuthContext = React.createContext(null);
-
 
 const base_url = "https://pamoja-backend.onrender.com/api";
 // const base_url = "http://localhost:5000/api";
@@ -29,21 +28,20 @@ export function AuthProvider(props) {
   };
   const value = React.useMemo(() => {
     const getUserProfile = async () => {
-      await axios()
-        .get(`${base_url}/users/info`)
-        .then((res) => {
-          setCurrentUser({
-            ...res.data,
-            name: res.data.name,
-            email: res.data.email,
-            id: res.data.id,
-            credits: res.data.credits,
-          });
-          setIsLoggedIn(true);
-        })
-        .catch((error) => {
-          alert(error.response.data.message);
+      try {
+        const axiosInstance = await Axios(); // invoke withAuth() to get the axios instance
+        const response = await axiosInstance.get(`${base_url}/users/info`);
+        setCurrentUser({
+          ...response.data,
+          name: response.data.name,
+          email: response.data.email,
+          id: response.data.id,
+          credits: response.data.credits,
         });
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
     };
 
     return {
@@ -74,7 +72,7 @@ export function RequireAuth({ children }) {
       }
 
       if (!auth.user && !token) {
-        navigation.navigate("Login", { screen: 'Login' });
+        navigation.navigate("Login");
       }
     };
 

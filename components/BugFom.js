@@ -24,7 +24,7 @@ export default function BugForm() {
   const base_url = "https://pamoja-backend.onrender.com/api";
   // const base_url = "http://localhost:5000/api";
   const { getUserProfile } = useAuth();
-  React.useEffect(() => {}, [isLoading]);
+  // React.useEffect(() => {}, [isLoading]);
  
   const submit = async(event) => {
     event.preventDefault();

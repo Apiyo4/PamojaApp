@@ -14,15 +14,16 @@ export default function Lessons() {
 
   useEffect(()=>{
   const getLessons = async ()=>{
-    await axios()
-    .get(`${base_url}/lessons`)
-    .then((res) => {
-      setLessons(res.data);
-    })
-    .catch((error) => alert(error.response.data));
+    try {
+      const axiosInstance = await axios();
+      const response = await axiosInstance.get(`${base_url}/lessons`);
+      setLessons(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
   getLessons()
-}, [lessons, setLessons])
+}, [lessons])
   return (
     // <RequireAuth>
     <View style={styles.container}>

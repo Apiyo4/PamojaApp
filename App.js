@@ -32,10 +32,8 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(initialState);
   const [user, setUser] = useState(null);
   // const {getUserProfile} = useAuth()
-  const credits = user
-    ? `${user.credits} credits available `
-    : `Loading... `;
-  React.useEffect(() => {}, [isLoggedIn, setIsLoggedIn, user]);
+  const credits = user ? `${user.credits} credits available ` : `Loading... `;
+  // React.useEffect(() => {}, [isLoggedIn]);
 
   const logout = async () => {
     if ((await getStorageItem()) != "null") {
@@ -53,6 +51,7 @@ export default function App() {
   const AppStack = () => {
     return (
       <Stack.Navigator
+        initialRouteName="Login"
         screenOptions={{
           headerTitleAlign: "center",
           colorTint: "#d6a7b1",
@@ -88,9 +87,24 @@ export default function App() {
           }}
           drawerContentContainerStyle={{ paddingTop: 20 }}
         >
+          <Drawer.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false, drawerLabel: () => null }}
+          />
+          <Drawer.Screen name="Signup" options={{ headerShown: false, drawerLabel: () => null}} component={Signup}  />
           {!isLoggedIn && (
             <Drawer.Screen
-              name="Login"
+              name="AppStack"
+              component={AppStack}
+              options={{
+                headerShown: false,
+              }}
+            />
+          )}
+          {!isLoggedIn && (
+            <Drawer.Screen
+              name="AppStack"
               component={AppStack}
               options={{
                 title: "Login",
@@ -111,7 +125,11 @@ export default function App() {
               options={{
                 title: "Books",
                 drawerIcon: () => (
-                  <MaterialIcons name="library-books" size={24} color="#e98fb6" />
+                  <MaterialIcons
+                    name="library-books"
+                    size={24}
+                    color="#e98fb6"
+                  />
                 ),
                 headerTintColor: "#d6a7b1",
                 headerTitle: credits,
@@ -128,7 +146,7 @@ export default function App() {
                   </TouchableOpacity>
                 ),
                 drawerLabelStyle: {
-                  color: '#e98fb6',
+                  color: "#e98fb6",
                 },
                 style: {
                   marginTop: 60,
@@ -142,7 +160,9 @@ export default function App() {
               component={Bugs}
               options={{
                 title: "Bugs",
-                drawerIcon: () => <Entypo name="bug" size={24} color="#e98fb6" />,
+                drawerIcon: () => (
+                  <Entypo name="bug" size={24} color="#e98fb6" />
+                ),
                 headerTintColor: "#d6a7b1",
                 headerTitle: credits,
                 headerRight: () => (
@@ -158,7 +178,7 @@ export default function App() {
                   </TouchableOpacity>
                 ),
                 drawerLabelStyle: {
-                  color: '#e98fb6',
+                  color: "#e98fb6",
                 },
               }}
             />
@@ -191,7 +211,7 @@ export default function App() {
                   </TouchableOpacity>
                 ),
                 drawerLabelStyle: {
-                  color: '#e98fb6',
+                  color: "#e98fb6",
                 },
               }}
             />

@@ -12,16 +12,17 @@ export default function Bugs() {
   const base_url = "https://pamoja-backend.onrender.com/api";
   // const base_url = "http://localhost:5000/api";
   useEffect(() => {
-    const getBugs = async() => {
-      await axios()
-        .get(`${base_url}/bugs`)
-        .then((res) => {
-          setBugs(res.data);
-        })
-        .catch((error) => alert(error.response.data));
+    const getBugs = async () => {
+      try {
+        const axiosInstance = await axios();
+        const response = await axiosInstance.get(`${base_url}/bugs`);
+        setBugs(response.data);
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
     };
-    getBugs()
-  }, [bugs, setBugs]);
+    getBugs();
+  }, [bugs]);
   return (
     // <RequireAuth>
     <View style={styles.container}>
@@ -43,6 +44,7 @@ export default function Bugs() {
             fontWeight: "700",
             paddingLeft: "18px",
             textAlign: "left",
+            textDecorationLine:'underline'
           }}
         >
           {isAddBug ? "Cancel" : "Add a bug"}

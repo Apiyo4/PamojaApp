@@ -28,7 +28,7 @@ export default function BookForm() {
   const base_url = "https://pamoja-backend.onrender.com/api";
   // const base_url = "http://localhost:5000/api";
   const { getUserProfile } = useAuth();
-  React.useEffect(() => {}, [isLoading]);
+  // React.useEffect(() => {}, [isLoading]);
   const handleImageUpload = (event) => {
     const options = {
       mediaType: "photo",

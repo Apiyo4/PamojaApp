@@ -1,3 +1,4 @@
+import axios from "../axios";
 import { useState } from "react";
 import {
   FlatList,
@@ -76,7 +77,6 @@ export default function Book({ books }) {
   const renderBook = ({ item }) => {
     const edition = `Edition: ${item.edition} `;
     const commentsUrl = `${base_url}/books/${item._id}/comments`;
-    
     const exchangeBook = async () => {
       if (item.user === user._id) {
         await axios()
@@ -182,6 +182,10 @@ export default function Book({ books }) {
               url={commentsUrl}
             />
           )}
+          <Text>
+            
+          </Text>
+           
         </View>
         <View
           style={{
@@ -216,7 +220,8 @@ export default function Book({ books }) {
                 fontWeight: "700",
               }}
             >
-              { user.id && item.user == user._id ? "Give" : "Get"} 
+             
+              { item.user === user._id.toString() ? "Give" : "Get"} 
             </Text>
           </TouchableOpacity>
         </View>
@@ -229,7 +234,7 @@ export default function Book({ books }) {
       <View style={styles.container}>
         <FlatList
           data={books}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
           extraData={books}
           renderItem={renderBook}
         />

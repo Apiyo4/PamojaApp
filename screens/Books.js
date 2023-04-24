@@ -14,52 +14,54 @@ export default function Books({ navigation }) {
   const { user, getUserProfile, isLoggedIn } = useAuth();
   useEffect(() => {
     const getBooks = async () => {
-      await axios()
-        .get(`${base_url}/books`)
-        .then((res) => {
-          setBooks(res.data);
-        })
-        .catch((error) => alert(error.response.data));
+      try {
+        const axiosInstance = await axios();
+        const response = await axiosInstance.get(`${base_url}/books`);
+        setBooks(response.data);
+      } catch (error) {
+        console.log(error.message);
+        navigation.navigate("Login");
+      }
     };
-    getBooks()
-  }, [books, setBooks]);
+    getBooks();
+  }, [books]);
   useEffect(() => {}, [isAddBook]);
 
   return (
-    // <RequireAuth>
-    <View style={[styles.container]}>
-      <TouchableOpacity
-        style={{
-          color: "#fff",
-          marginTop: "2rem",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-          display: "flex",
-          flexDirection: "row",
-        }}
-        onPress={() => setIsAddBook((isAddBook) => !isAddBook)}
-      >
-        <Text
+    <RequireAuth>
+      <View style={[styles.container]}>
+        <TouchableOpacity
           style={{
-            color: "blue",
-            fontSize: 18,
-            fontWeight: "700",
-            paddingLeft: "18px",
-            textAlign: "left",
-            textDecorationLine:'underline'
+            color: "#fff",
+            marginTop: "2rem",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            display: "flex",
+            flexDirection: "row",
           }}
+          onPress={() => setIsAddBook((isAddBook) => !isAddBook)}
         >
-          {isAddBook ? "Cancel" : "Add a book"}
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{
+              color: "blue",
+              fontSize: 18,
+              fontWeight: "700",
+              paddingLeft: "18px",
+              textAlign: "left",
+              textDecorationLine: "underline",
+            }}
+          >
+            {isAddBook ? "Cancel" : "Add a book"}
+          </Text>
+        </TouchableOpacity>
 
-      {isAddBook ? (
-        <BookForm />
-      ) : (
-        <Book books={books.filter((book) => !book.isExchanged)} />
-      )}
-    </View>
-    // </RequireAuth>
+        {isAddBook ? (
+          <BookForm />
+        ) : (
+          <Book books={books.filter((book) => !book.isExchanged)} />
+        )}
+      </View>
+    </RequireAuth>
   );
 }
 const styles = StyleSheet.create({

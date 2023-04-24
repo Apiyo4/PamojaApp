@@ -149,7 +149,7 @@ export default function Signup() {
         </TouchableOpacity>
         <Text style={{ fontSize: 18, textAlign: "center" }}>
           Have an account?{" "}
-          <TouchableOpacity onPress={() => navigation.navigate("Signup",  { screen: 'Signup' })}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <Text style={{ color: "blue" }}>Login</Text>
           </TouchableOpacity>
         </Text>

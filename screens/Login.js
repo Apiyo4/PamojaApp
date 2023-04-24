@@ -33,8 +33,7 @@ export default function Login() {
         setIsLoading(true)
         if (res.data.token) {
           // sessionStorage.setItem("token", res.data.token);
-
-          AsyncStorage.setItem("token", JSON.stringify(res.data.token));
+          AsyncStorage.setItem("token", res.data.token);
         }
         getUserProfile();
 
@@ -136,7 +135,7 @@ export default function Login() {
         </TouchableOpacity>
         <Text style={{ fontSize: 18, textAlign: "center" }}>
           Don't have an account?{" "}
-          <TouchableOpacity onPress={() => navigation.navigate("Signup",  { screen: 'Signup' })}>
+          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
             <Text style={{ color: "blue" }}>Signup</Text>
           </TouchableOpacity>
         </Text>

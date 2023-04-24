@@ -115,7 +115,7 @@ export default function Lesson({ lessons, user }) {
         >
           <TouchableOpacity
             style={{
-              marginTop: "8px",
+              marginTop: 8,
               borderRadius: 10,
               height: 40,
               color: "#fff",

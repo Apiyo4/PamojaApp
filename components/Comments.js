@@ -64,14 +64,14 @@ const Comments = ({ comments, comment, url }) => {
 
       <TextInput
         style={{
-          paddingRight: "4.5rem",
+          paddingRight: 72,
           height: 60,
           backgroundColor: "#fff",
           borderRadius: 20,
           borderWidth: 2,
           borderColor: "#3AA5F3",
-          paddingLeft: "2rem",
-          marginVertical: "1rem",
+          paddingLeft: 32,
+          marginVertical: 16,
           fontSize: 18,
           
         }}

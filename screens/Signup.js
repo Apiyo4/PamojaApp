@@ -54,7 +54,6 @@ export default function Signup() {
     <View style={styles.container}>
       <Text
         style={{
-          fontFamily: "Montserrat",
           fontSize: 36,
           fontWeight: "600",
           lineHeight: 44,
@@ -70,14 +69,14 @@ export default function Signup() {
       <TextInput
           placeholder="Enter name"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            // marginVertical: "2rem",
+            paddingLeft: 32,
+            marginVertical: 32,
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
@@ -87,14 +86,14 @@ export default function Signup() {
         <TextInput
           placeholder="Enter email"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 32,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginVertical: "2rem",
+            paddingLeft: 32,
+            marginVertical: 32,
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
@@ -113,13 +112,13 @@ export default function Signup() {
           <TextInput
             placeholder="Enter password"
             style={{
-              paddingRight: "4.5rem",
+              paddingRight: 72,
               flex: 1,
               borderRadius: 20,
               backgroundColor: "#fff",
               borderWidth: 2,
               borderColor: "#3AA5F3",
-              paddingLeft: "2rem",
+              paddingLeft: 32,
               fontSize: 18,
             }}
             placeholderTextColor="#000000"
@@ -129,12 +128,12 @@ export default function Signup() {
         </View>
         <TouchableOpacity
           style={{
-            marginBottom: "32px",
+            marginBottom: 32,
             borderRadius: 20,
             height: 60,
             color: "#fff",
             backgroundColor: "#3182CE",
-            marginTop: "3rem",
+            marginTop: 48,
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
@@ -143,7 +142,7 @@ export default function Signup() {
           onPress={submit}
         >
           {isLoading && <ActivityIndicator size="small" color="#fff" />}
-          <Text style={{ color: "#fff", fontSize: 18, fontWeight: "700", paddingLeft: '18px' }}>
+          <Text style={{ color: "#fff", fontSize: 18, fontWeight: "700", paddingLeft: 18 }}>
             Submit
           </Text>
         </TouchableOpacity>

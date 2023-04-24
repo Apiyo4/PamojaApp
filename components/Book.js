@@ -198,7 +198,7 @@ export default function Book({ books }) {
         >
           <TouchableOpacity
             style={{
-              marginTop: "8px",
+              marginTop: 8,
               borderRadius: 10,
               height: 40,
               color: "#fff",

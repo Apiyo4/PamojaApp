@@ -33,7 +33,7 @@ export default function Books({ navigation }) {
         <TouchableOpacity
           style={{
             color: "#fff",
-            marginTop: "2rem",
+            marginTop: 32,
             justifyContent: "flex-start",
             alignItems: "flex-start",
             display: "flex",
@@ -46,7 +46,7 @@ export default function Books({ navigation }) {
               color: "blue",
               fontSize: 18,
               fontWeight: "700",
-              paddingLeft: "18px",
+              paddingLeft: 18,
               textAlign: "left",
               textDecorationLine: "underline",
             }}

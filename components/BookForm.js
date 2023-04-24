@@ -82,7 +82,6 @@ export default function BookForm() {
     <View style={styles.container}>
       <Text
         style={{
-          fontFamily: "Montserrat",
           fontSize: 36,
           fontWeight: "600",
           lineHeight: 44,
@@ -98,14 +97,14 @@ export default function BookForm() {
         <TextInput
           placeholder="Enter title"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
+            paddingLeft: 32,
+            marginBottom: 32,
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
@@ -115,14 +114,14 @@ export default function BookForm() {
         <TextInput
           placeholder="Enter author"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
+            paddingLeft: 32,
+            marginBottom: 32,
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
@@ -132,14 +131,14 @@ export default function BookForm() {
         <TextInput
           placeholder="Enter book edition"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
+            paddingLeft: 32,
+            marginBottom: 32,
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
@@ -149,14 +148,14 @@ export default function BookForm() {
         <TextInput
           placeholder="Enter location"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
+            paddingLeft: 32,
+            marginBottom: 32,
             fontSize: 18,
           }}
           placeholderTextColor="#000000"
@@ -167,14 +166,14 @@ export default function BookForm() {
           placeholder="Enter book description"
           placeholderTextColor="#000000"
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
-            marginBottom: "2rem",
+            paddingLeft: 32,
+            marginBottom: 32,
             fontSize: 18,
           }}
           ref={descriptionRef}
@@ -183,13 +182,13 @@ export default function BookForm() {
         <TouchableOpacity
           onPress={handleImageUpload}
           style={{
-            paddingRight: "4.5rem",
+            paddingRight: 72,
             height: 60,
             backgroundColor: "#fff",
             borderRadius: 20,
             borderWidth: 2,
             borderColor: "#3AA5F3",
-            paddingLeft: "2rem",
+            paddingLeft: 32,
             justifyContent: "center",
             fontSize: 18,
           }}
@@ -202,12 +201,12 @@ export default function BookForm() {
 
         <TouchableOpacity
           style={{
-            marginBottom: "32px",
+            marginBottom: 32,
             borderRadius: 20,
             height: 60,
             color: "#fff",
             backgroundColor: "#3182CE",
-            marginTop: "3rem",
+            marginTop: 48,
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
@@ -221,7 +220,7 @@ export default function BookForm() {
               color: "#fff",
               fontSize: 18,
               fontWeight: "700",
-              paddingLeft: "18px",
+              paddingLeft: 18,
             }}
           >
             Add book
